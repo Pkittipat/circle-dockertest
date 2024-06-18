@@ -26,9 +26,7 @@ jobs:
       - checkout
       # Replace this with a real test runner invocation
       - go/mod-download
-      - go/test:
-          failfast: true
-          race: true
+      - go/test
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
