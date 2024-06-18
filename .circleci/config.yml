@@ -7,14 +7,17 @@ version: 2.1
 
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/jobs-steps/#jobs-overview & https://circleci.com/docs/configuration-reference/#jobs
+orbs:
+  go: circleci/go@1.7.3
+  heroku: circleci/heroku@1.2.6
+
 jobs:
   test:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/executor-intro/ & https://circleci.com/docs/configuration-reference/#executor-job
-    docker:
-      # Specify the version you desire here
-      # See: https://circleci.com/developer/images/image/cimg/base
-      - image: circleci/golang:1.22
+    executor:
+      name: go/default
+      tag: '1.22.3'
 
     # Add steps to the job
     # See: https://circleci.com/docs/jobs-steps/#steps-overview & https://circleci.com/docs/configuration-reference/#steps
@@ -22,12 +25,10 @@ jobs:
       # Checkout the code as the first step.
       - checkout
       # Replace this with a real test runner invocation
-      - run:
-          name: install packages
-          command: go mod tidy
-      - run:
-          name: run test
-          command: go test ./... -v
+      - go/mod-download
+      - go/test:
+          failfast: true
+          race: true
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows
