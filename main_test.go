@@ -54,7 +54,7 @@ func TestPostgresWithTestContainer(t *testing.T) {
 		port.Port(),
 	)
 
-	db, err := sql.Open("pgx", dsn)
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		t.Fatal(err)
 	}
