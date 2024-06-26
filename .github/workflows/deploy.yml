@@ -8,30 +8,14 @@ on:
     types:
       - completed
 jobs:
-  wait_for_approval:
+deploy:
     runs-on: ubuntu-latest
+
+    if: github.event_name == 'workflow_dispatch'
+    
     steps:
-      - name: Approval required
-        uses: peter-evans/wait-for-approval@v2
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          timeout-minutes: 1440 # Timeout after 24 hours
-          reactivate: false
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: wait_for_approval
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: '1.18'
-
-      - name: Deploy
-        run: |
-          # Add your deployment script here
-          echo "Deploying application..."
+    - name: Deploy application
+      run: echo "Deploying application..."
