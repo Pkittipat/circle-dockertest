@@ -3,10 +3,11 @@
 
 name: Deploy
 on:
-  workflow_run:
-    workflows: ["Go"]
-    types:
-      - completed
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
